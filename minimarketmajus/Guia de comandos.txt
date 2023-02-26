@@ -1,0 +1,38 @@
+py -3 -m venv venv
+venv\Scripts\activate
+
+para actulizar la base de datos
+1. python manage.py makemigrations
+2. python manage.py migrate
+
+para subir a git
+1. git add .
+2. git commit -m "first commit"
+3. git push
+4. ///Opcional para bajar los cambios o actualizar 4. git pull
+
+Para crear un usuario para la tabla user 
+1. python manage.py createsuperuser
+
+pip install gobject -0.1.0
+
+requirimientos
+pip install -r requirements.txt
+
+Descargar para que la liberia de pdf funcione, instalar GTK
+https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#windows
+
+#Guia para iniciar el proyecto
+1. paso clonar el proyecto: git clone "url"
+2. crear un base de datos vacia con el nombre "DBminimarketMajus"
+3. Cambiar el nombre de usuario, contraseña y puerto en el archivo minimarketmajus/minimarketmajus/settings.py. Para precisar en la linea 80 del codigo.
+4. Instalar las librerias y ejecutar este comando: pip install -r requirements.txt
+5. Descargar y instalar GTK es obligatorio si no lo tienen dar click al enlace: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#windows
+5.1. Cerrar visual studio y volver a abrir
+6. Migrar la bd con el siguiente comando(En orden):
+    6.1. Primero esto: python manage.py makemigrations
+    6.2. Segundo paso: python manage.py migrate
+7. Crear el super usuario con el siguiente comando:
+python manage.py createsuperuser
+8. Dirigete a mysql y inserta a la tabla usuario pero con cable foranea de user(Es la tabla que genera django) que por lo general es "1" ya que es el nuevo usuario que se creo en el paso 7.
+9. por ultimo ejecutar el siguiente comando: py .\manage.py runserver
