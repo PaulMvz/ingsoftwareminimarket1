@@ -1,0 +1,132 @@
+<title>{{nombre_cliente}}</title>
+<style>
+    *{
+        font-size: 12px;
+    }
+    .logo {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .logo img{
+        width: 80px;
+        height: 80px;
+    }
+    .datos_empresa{
+        text-align: center;
+        line-height: 0.5;
+    }
+    .datos_empresa .nombre_empresa{
+        font-size: 18px;
+        font-weight: 1000;
+    }
+    .datos_cliente{
+        line-height: 0.5;
+    }
+    .container__table{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .table thead th{
+        border-top: 2px solid #000;
+        border-bottom: 2px solid #000;
+    }
+    .table tbody {
+        border-bottom: 1px solid #000;
+    }
+
+    .detalle{
+        padding: 10px 40px;
+        text-align: right;
+        line-height: 1.5;
+    }
+    .detalle p{
+        margin: 0;
+    }
+    .footer{
+        text-align: center;
+        padding: 0 20px;
+    }
+    .qr{
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 25px 0;
+    }
+    .qr img{
+        width: 150px;
+        height: 150px;
+    }
+</style>
+<div class="logo">
+    <img src="http://cdn.onlinewebfonts.com/svg/img_264677.png" alt="" >
+</div>
+<div class="datos_empresa">
+<h3 class="nombre_empresa">Minimarket Majus</h3>
+<p>Av. SinchiRoca s/n</p>
+<p>Majus E.I.R.L</p>
+<P>Telefono: 987654321</P>
+<p>Ruc: 2115966856</p>
+<h3>BOLETA DE VENTA ELECTRONICA</h3>
+<h3>B002-43</h3>
+</div>
+
+<body> <!--Contenido de la tabla-->
+<span>Fecha: {{fecha}}</span>
+<hr>
+<div class="datos_cliente">
+    <p><b>Nombre:</b> {{nombre_cliente}}</p>
+    <p><b>Dni:</b> NaN</p>
+    <p><b>Direccion:</b> NaN</p>
+</div>
+<div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Cant.</th>
+            <th scope="col">Producto</th>
+            <th scope="col">P.unit</th>
+            <th scope="col">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+          <tr>
+            <th scope="row">{{producto.cantidad_detalleboleta}}</th>
+            <td>{{producto.id_producto.nombre_producto}}</td>
+            <td>{{producto.preciounitario_detalleboleta}}</td>
+            <td>{{producto.subtotal_detalleboleta}}</td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+</div>
+<div class="detalle">
+    <p>Subtotal: s/ {{total_venta}}</p>
+    <p>IGV: s/ 0.00</p>
+    <p><b>Total: s/ {{total_venta}}</b></p>
+</div>
+<div class="qr">
+    <img src="http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcSh-wrQu254qFaRcoYktJ5QmUhmuUedlbeMaQeaozAVD4lh4ICsGdBNubZ8UlMvWjKC" alt="">
+</div>
+
+
+<footer class="footer">
+    <h3 class="nombre_empresa">Gracias por su preferencia</h3>
+    <p>www.Majus.com</p>
+    <p>Representacion impresa de la Boleta electronica. Consulte su documento en </p>
+    <b>https://consulta.dmz.com</b>
+</footer>
+</body>
