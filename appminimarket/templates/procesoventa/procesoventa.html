@@ -1,0 +1,355 @@
+{% extends "masterPage/base.html" %} {% block title %} Proceso de Ventas
+{%endblock %} {% load static %} {% block content %}
+<style>
+  .categorias {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    flex-direction: row;
+    padding: 1rem;
+  }
+  .item_cat_img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 5px;
+  }
+  .item_cat_img img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .item_cat_title h1 {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 1rem 0;
+  }
+</style>
+<!-- page content -->
+<div class="right_col" role="main">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Bienvenido al proceso de ventas</h3>
+      </div>
+
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search for..."
+            />
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Go!</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+      <!--Categorias::Begin-->
+      <div class="col-md-8">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Categorias</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="categorias">
+              <div class="item_cat">
+                <a href="">
+                <div class="item_cat_img">
+                  <img
+                    src="/media/Categorias/todos_5xkMgdN.png"
+                    alt=""
+                  />
+                </div>
+                <div class="item_cat_title">
+                  <h1>Todos</h1>
+                </div>
+              </a>
+              </div>
+              {% for categoria in categorias %}
+              <div class="item_cat">
+                <a href="">
+                <div class="item_cat_img">
+                    <img
+                      src="{{ categoria.imagen_categoria.url }}"
+                      alt=""
+                    />
+                </div>
+                <div class="item_cat_title">
+                  <h1>{{categoria.nombre_categoria}}</h1>
+                </div>
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <!--productos-->
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Productos</h2>
+            
+            <div class="clearfix"></div>
+            
+          </div>
+          <div class="title_right">
+            <div class="col-md-12 col-sm-12 form-group pull-right top_search">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar productos..."
+                  style="border-color: gray;"
+                />
+                <span class="input-group-btn">
+                  <button class="btn btn-success" style="border-color: gray; color: white;" type="button">Buscar</button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              {% for i in productos %}
+              <div class="col-md-55">
+                <div class="thumbnail">
+                  <div class="image view view-first">
+                    <img
+                      style="width: 100%; display: block"
+                      src="{{ i.imagen_producto.url }}"
+                      alt="image"
+                    />
+                    <div class="mask">
+                      <p>{{ i.codigo_producto }}</p>
+                      <div class="tools tools-bottom">
+                        <a onclick="btn_agregar_carrito('{{i.id_producto}}','{{i.codigo_producto }}','{{i.nombre_producto}}','{{i.precio_producto}}','{{i.imagen_producto.url}}')"><i class="fa fa-plus"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="caption" style="text-align: center">
+                    <p><b>{{ i.nombre_producto }}</b></p>
+                    <span>Stock: {{ i.cant_stock_producto }}</span>
+                    <p>s/ 
+                        {{ i.precio_producto }}</p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--categorias::END-->
+
+      <div class="col-md-4">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Detalle venta</h2>
+            
+            <div class="clearfix"></div>
+          </div>
+          <div class="title_right">
+            <div class="col-md-12 col-sm-12 form-group">
+              <div class="input-group">
+                <input
+                  onchange="input_enviar_nombre_cliente()"
+                  name="nombre_cliente"
+                  type="text"
+                  class="form-control"
+                  placeholder="Ingrese nombre del cliente..."
+                />
+              </div>
+            </div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-md-12 col-sm-4 profile_details">
+                 <!--detalleVenta::BEGIN-->
+                 <div id="carrito_container"></div>
+                <!--<div class="well profile_view">
+                  <div class="col-sm-12">
+                    <div class="x_title">
+                      <h2>A0001</h2>
+                      <ul class="nav navbar-right panel_toolbox" style="min-width: 0;">
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="left col-sm-7">
+                      <h2>Atun Gloria</h2>
+                      <p>S/. 23</p>
+                      <div class="text-center">
+                        <button class="btn btn-default">-</button>
+                        <input type="text" value="1" style="width: 30px;" class="text-center">
+                        <button class="btn btn-default">+</button>
+                      </div>
+                    </div>
+                    <div class="right col-sm-5 text-center">
+                      <img
+                        src="https://vivanda.vtexassets.com/arquivos/ids/358838/62671.jpg?v=637807865953370000" alt=""
+                        class="img-circle img-fluid"/>
+                    </div>
+                  </div>
+                </div>-->
+                <!--detalleVenta::END-->
+              </div>
+            </div>
+          </div>
+          
+          <h2>fecha: <span id="span_fechaactual">##/##/####</span></h2>
+          <h2>Cantidad: <span id="span_cantidad_producto"></span></h4>
+          <h2>Total: s/ <span id="span_total_producto"></span></h4>
+          
+          <form method="post">
+            <a class="btn btn-danger" href="" onclick="eliminar_todo()">Eliminar todo</a>
+            {% csrf_token %}
+            <input type="hidden" name="nombre_cliente_server" id="nombre_cliente_server">
+            <input type="hidden" name="id_producto_xyz" id="id_producto_xyz">
+            <input type="hidden" name="cantidad_detalleboleta_xyz" id="cantidad_detalleboleta_xyz">
+            <button type="submit" class="btn btn-warning">Proceder pago</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- /page content -->
+
+<!--Codigo javascrip-->
+<script>
+    var carrito = {
+        id_producto: [],
+        codigo_producto: [],
+        nombre_producto: [],
+        precio_producto: [],
+        cantidad_producto: [],
+        imagen_producto: [],
+    }
+    function btn_agregar_carrito(id_producto,codigo_producto,nombre_producto,precio_producto,imagen_producto) {
+        carrito.id_producto.push(id_producto);
+        carrito.codigo_producto.push(codigo_producto);
+        carrito.nombre_producto.push(nombre_producto);
+        carrito.precio_producto.push(precio_producto);
+        carrito.cantidad_producto.push(1);
+        carrito.imagen_producto.push(imagen_producto)
+      //alert(nombre_producto);
+        pintar_carrito()
+    }
+    function pintar_carrito(){
+       // repintar el carrito
+        var carrito_container = document.getElementById('carrito_container')
+        carrito_container.innerHTML = ''
+        for (var i = 0; i < carrito.id_producto.length; i++) {
+        carrito_container.innerHTML += `
+        <div class="well profile_view">
+                  <div class="col-sm-12">
+                    <div class="x_title">
+                      <h2>codigo: `+carrito.codigo_producto[i]+`</h2>
+                      <ul class="nav navbar-right panel_toolbox" style="min-width: 0;">
+                        <li><a class="close-link" onclick="eliminar_producto(`+carrito.id_producto[i]+`)"><i class="fa fa-close"></i></a>
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="left col-sm-7">
+                      <h2>`+carrito.nombre_producto[i]+`</h2>
+                      <p>S/. `+carrito.precio_producto[i]+`</p>
+                      <div class="text-center">
+                        <button class="btn btn-default" onclick="btn_decrementoP(`+i+`)">-</button> 
+                        <input type="text" value="`+carrito.cantidad_producto[i]+`" style="width: 30px;" class="text-center" onblur="actualizar_datos_input(`+i+`)" id="input_cantidad_`+i+`">
+                        <button class="btn btn-default" onclick="btn_incrementoP(`+i+`)">+</button>
+                      </div>
+                    </div>
+                    <div class="right col-sm-5 text-center">
+                      <img
+                        src="`+carrito.imagen_producto[i]+`" alt=""
+                        class="img-circle img-fluid"/>
+                    </div>
+                  </div>
+                </div>
+        `}
+        id_producto_xyz = document.getElementById('id_producto_xyz')
+        id_producto_xyz.value = carrito.id_producto
+        cantidad_detalleboleta_xyz = document.getElementById('cantidad_detalleboleta_xyz')
+        cantidad_detalleboleta_xyz.value = carrito.cantidad_producto
+        actualizar_datos_detalleVenta()
+        
+    }
+    function eliminar_producto(id_producto){
+        // eliminar producto del carrito
+        var index = carrito.id_producto.indexOf(id_producto)
+        carrito.id_producto.splice(index,1)
+        carrito.codigo_producto.splice(index,1)
+        carrito.nombre_producto.splice(index,1)
+        carrito.precio_producto.splice(index,1)
+        carrito.cantidad_producto.splice(index,1)
+        carrito.imagen_producto.splice(index,1)
+        pintar_carrito()
+    }
+    function eliminar_todo(){
+      carrito.id_producto = []
+      carrito.codigo_producto = []
+      carrito.nombre_producto = []
+      carrito.precio_producto = []
+      carrito.cantidad_producto = []
+      carrito.imagen_producto = []
+      pintar_carrito()
+    }
+    
+    // funcion de los botones de incre y decr
+    function btn_decrementoP(i){
+      if(carrito.cantidad_producto[i] > 1){
+        carrito.cantidad_producto[i] = carrito.cantidad_producto[i] - 1
+        pintar_carrito()
+      }
+    }
+    function btn_incrementoP(i){
+      carrito.cantidad_producto[i] = carrito.cantidad_producto[i] + 1
+      pintar_carrito()
+    }
+    actualizar_datos_detalleVenta()
+    function actualizar_datos_detalleVenta(){
+      var span_cantidad_producto = document.getElementById('span_cantidad_producto')
+      var span_total_producto = document.getElementById('span_total_producto')
+      var cantidad_producto = 0
+      var total_producto = 0
+      for (var i = 0; i < carrito.id_producto.length; i++) {
+        cantidad_producto = cantidad_producto + carrito.cantidad_producto[i]
+        total_producto = total_producto + (carrito.cantidad_producto[i] * carrito.precio_producto[i])
+      }
+      span_cantidad_producto.innerHTML = cantidad_producto
+      span_total_producto.innerHTML = total_producto
+    }
+    actualizarfechaactual()
+    function actualizarfechaactual(){
+      const fechaactual = new Date();
+      const anio = fechaactual.getFullYear();
+      const mes = fechaactual.getMonth() + 1;
+      const dia = fechaactual.getDate();
+
+      const fechaactualString = `${dia.toString().padStart(2, '0')}-${mes.toString().padStart(2, '0')}-${anio}`;
+      span_fechaactual.innerHTML = fechaactualString;
+    }
+    function actualizar_datos_input(i){
+      var input_cantidad = document.getElementById('input_cantidad_'+i)
+      carrito.cantidad_producto[i] = parseInt(input_cantidad.value)
+      pintar_carrito()
+    }
+    // enviando nombre del cliente al servidor
+    function input_enviar_nombre_cliente(){
+      var input_nombre = document.getElementsByName('nombre_cliente')[0]
+      var nombre_cliente_server = document.getElementById('nombre_cliente_server')
+      nombre_cliente_server.value = input_nombre.value
+    }
+    </script>
+<!--Fin Codigo javascrip-->
+{% endblock %}
