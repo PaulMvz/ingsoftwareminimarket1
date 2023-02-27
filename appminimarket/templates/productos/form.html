@@ -1,0 +1,67 @@
+<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="codigo_producto">Codigo
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <input type="text" id="codigo_producto" required="required" class="form-control" name="codigo_producto" value="{{producto.codigo_producto}}">
+        </div>
+    </div>
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="nombre_producto">Nombre 
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <input type="text" id="nombre_producto" name="nombre_producto" required="required" class="form-control" value="{{producto.nombre_producto}}">
+        </div>
+    </div>
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="descripcion_producto">Descripción
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <textarea class="form-control" id="descripcion_producto" name="descripcion_producto" rows="3" placeholder="Ingrese descripción...">{{producto.descripcion_producto}}</textarea>
+        </div>
+    </div>
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="cant_stock_producto">Stock 
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <input type="text" id="cant_stock_producto" name="cant_stock_producto" required="required" class="form-control" value="{{producto.cant_stock_producto}}">
+        </div>
+    </div>
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="imagen_producto">Imagen 
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <input type="file" class="form-control-file" name="imagen_producto" id="imagen_producto" accept="image/*">
+            <img src="{{categoria.imagen_producto.url}}" alt="" width="50">
+            <label for="">Imagen Actual</label>
+        </div>
+    </div>
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="precio_producto">Precio
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <input type="text" id="precio_producto" name="precio_producto" required="required" class="form-control" value="{{producto.precio_producto}}">
+        </div>
+    </div>
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="id_categoria">Categoria 
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <select class="form-control" name="id_categoria">
+                {% for categoria in categorias %}
+                <option value="{{categoria.id_categoria}}" {% if categoria.id_categoria == producto.id_categoria.id_categoria %} selected {% endif %}>{{categoria.nombre_categoria}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="item form-group">
+        <div class="col-md-6 col-sm-6 offset-md-3">
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button class="btn btn-warning" type="reset">Resetear</button>
+            <a class="btn btn-danger" type="button" href="{% url 'productos' %}">Cancelar</a>
+        </div>
+    </div>
+
+</form>

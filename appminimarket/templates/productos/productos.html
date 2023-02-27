@@ -1,0 +1,104 @@
+{% extends "masterPage/base.html" %}
+<!--Extender para usar el contenido de la pagina maestra-->
+{% block title %} Productos {% endblock %} {% block content %}
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Tabla Productos</h3>
+        </div>
+
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <div class="row" style="display: block;">
+
+        <div class="col-md-12 col-sm-12  ">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Diseño de Tabla Productos <small>Custom design</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Settings 1</a>
+                      <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+              <a class="btn btn-success" href="{% url 'productos_crear' %}"><i class="fa fa-plus-square"></i> Agregar nuevo producto</a>
+
+              <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action table-hove">
+                  <thead>
+                    <tr class="headings">
+                      <th class="column-title">ID</th>
+                      <th class="column-title">Codigo</th>
+                      <th class="column-title">Nombre</th>
+                      <th class="column-title">Descripción</th>
+                      <th class="column-title">Stock</th>
+                      <th class="column-title">Imagen</th>
+                      <th class="column-title">Precio</th>
+                      <th class="column-title">Categoria</th>
+                      <th class="column-title no-link last"><span class="nobr">Acción</span>
+                      </th>
+                      <th class="bulk-actions" colspan="7">
+                        <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for producto in productos %}
+                    <tr class="even pointer">
+                      <td>{{ producto.id_producto }}</td>
+                      <td>{{ producto.codigo_producto }}</td>
+                      <td>{{ producto.nombre_producto }}</td>
+                      <td>{{ producto.descripcion_producto }}</td>
+                      <td>{{ producto.cant_stock_producto }}</td>
+                      <td>
+                        <img src="{{ producto.imagen_producto.url }}" alt="" width="50">
+                      </td>
+                      <td>{{ producto.precio_producto }}</td>
+                      <td>{{ producto.id_categoria.nombre_categoria }}</td>
+                      <td>
+                        <a class="btn btn-warning"  href="{% url 'productos_editar' producto.id_producto %}"><i class="fa fa-pencil-square-o"></i> Editar</a>
+                        <a class="btn btn-danger"  href="{% url 'productos_eliminar' producto.id_producto %}"><i class="fa fa-trash"></i> Eliminar</a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    
+                  </tbody>
+                </table>
+              </div>
+                      
+                  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /page content -->
+
+  {% endblock %}
+

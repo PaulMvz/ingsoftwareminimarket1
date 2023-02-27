@@ -1,0 +1,28 @@
+<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="nombre_categoria">Nombre 
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <input type="text" id="nombre_categoria" required="required" class="form-control" name="nombre_categoria" value="{{categoria.nombre_categoria}}">
+        </div>
+    </div>
+    <div class="item form-group">
+        <label class="col-form-label col-md-3 col-sm-3 label-align" for="imagen_categoria">Imagen 
+        </label>
+        <div class="col-md-6 col-sm-6 ">
+            <input type="file" class="form-control-file" name="imagen_categoria" id="imagen_categoria" accept="image/*">
+            <img src="{{categoria.imagen_categoria.url}}" alt="" width="50">
+            <label for="">Imagen Actual</label>
+        </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="item form-group">
+        <div class="col-md-6 col-sm-6 offset-md-3">
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button class="btn btn-warning" type="reset">Resetear</button>
+            <a class="btn btn-danger" type="button" href="{% url 'categorias' %}">Cancelar</a>
+        </div>
+    </div>
+
+</form>
